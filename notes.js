@@ -18,7 +18,7 @@ and if you clicked this because we have been fighting,
 screenshot this and send it to me.
 i love you too much to let you feel alone or unheard.
 i promise i will do my best to make things better.`,
-      
+
       `hey.
 im here with you.
 even if today feels heavy, you are not carrying it alone.
@@ -123,7 +123,6 @@ even when youre asleep.`
   }
 ]
 
-
 function byId(id){
   return document.getElementById(id)
 }
@@ -194,21 +193,34 @@ function openModal(categoryId, noteIndex){
     return
   }
 
+  const modal = byId("modal")
+  const modalTitle = byId("modalTitle")
+  const noteText = byId("noteText")
+  const pillRow = byId("pillRow")
+
+  if (!modal || !modalTitle || !noteText){
+    return
+  }
+
   currentCategory = cat
   currentIndex = clampIndex(noteIndex, cat.notes.length)
 
-  const modal = byId("modal")
-  byId("modalTitle").textContent = `${cat.emoji} ${cat.title}`
-  byId("noteText").textContent = cat.notes[currentIndex]
+  modalTitle.textContent = `${cat.emoji} ${cat.title}`
+  noteText.textContent = cat.notes[currentIndex]
 
-  const pillRow = byId("pillRow")
-  pillRow.innerHTML = ""
+  if (pillRow){
+    pillRow.innerHTML = ""
+  }
 
   modal.classList.add("show")
 }
 
 function renderGrid(filterText){
   const grid = byId("notesGrid")
+  if (!grid){
+    return
+  }
+
   grid.innerHTML = ""
 
   const q = (filterText || "").trim().toLowerCase()
@@ -232,46 +244,83 @@ function randomPick(){
 function init(){
   renderGrid("")
 
-  byId("search").addEventListener("input", (e) => {
-    renderGrid(e.target.value)
-  })
+  const search = byId("search")
+  if (search){
+    search.addEventListener("input", (e) => {
+      renderGrid(e.target.value)
+    })
+  }
 
-  byId("randomBtn").addEventListener("click", () => {
-    randomPick()
-  })
+  const randomBtn = byId("randomBtn")
+  if (randomBtn){
+    randomBtn.addEventListener("click", () => {
+      randomPick()
+    })
+  }
 
   const modal = byId("modal")
+  const closeModal = byId("closeModal")
 
-  byId("closeModal").addEventListener("click", () => {
-    modal.classList.remove("show")
-  })
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal){
+  if (closeModal && modal){
+    closeModal.addEventListener("click", () => {
       modal.classList.remove("show")
-    }
-  })
+    })
+  }
 
-  byId("prevNote").addEventListener("click", () => {
-    currentIndex = clampIndex(currentIndex - 1, currentCategory.notes.length)
-    byId("noteText").textContent = currentCategory.notes[currentIndex]
-  })
+  if (modal){
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal){
+        modal.classList.remove("show")
+      }
+    })
+  }
 
-  byId("nextNote").addEventListener("click", () => {
-    currentIndex = clampIndex(currentIndex + 1, currentCategory.notes.length)
-    byId("noteText").textContent = currentCategory.notes[currentIndex]
-  })
+  const prev = byId("prevNote")
+  if (prev){
+    prev.addEventListener("click", () => {
+      if (!currentCategory){
+        return
+      }
 
-  byId("copyNote").addEventListener("click", async () => {
-    const text = byId("noteText").textContent
+      currentIndex = clampIndex(currentIndex - 1, currentCategory.notes.length)
+      const noteText = byId("noteText")
+      if (noteText){
+        noteText.textContent = currentCategory.notes[currentIndex]
+      }
+    })
+  }
 
-    try{
-      await navigator.clipboard.writeText(text)
-      showToast("copied 💜")
-    }catch{
-      showToast("can’t copy")
-    }
-  })
+  const next = byId("nextNote")
+  if (next){
+    next.addEventListener("click", () => {
+      if (!currentCategory){
+        return
+      }
+
+      currentIndex = clampIndex(currentIndex + 1, currentCategory.notes.length)
+      const noteText = byId("noteText")
+      if (noteText){
+        noteText.textContent = currentCategory.notes[currentIndex]
+      }
+    })
+  }
+
+  const copy = byId("copyNote")
+  if (copy){
+    copy.addEventListener("click", async () => {
+      const noteText = byId("noteText")
+      if (!noteText){
+        return
+      }
+
+      try{
+        await navigator.clipboard.writeText(noteText.textContent)
+        showToast("copied 💜")
+      }catch{
+        showToast("can’t copy")
+      }
+    })
+  }
 
   if (location.hash){
     const id = location.hash.replace("#", "")
