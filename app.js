@@ -2,6 +2,10 @@ function byId(id){
   return document.getElementById(id)
 }
 
+function pad2(n){
+  return String(n).padStart(2, "0")
+}
+
 function showToast(text){
   const toast = byId("toast")
   if (!toast){
@@ -15,18 +19,6 @@ function showToast(text){
   window.__toastTimer = setTimeout(() => {
     toast.classList.remove("show")
   }, 1400)
-}
-
-function clamp(v, a, b){
-  if (v < a){
-    return a
-  }
-
-  if (v > b){
-    return b
-  }
-
-  return v
 }
 
 function addTilt(){
@@ -49,66 +41,34 @@ function addTilt(){
   }
 }
 
-// "We've been us for" — count up from Nov 2, 2025 8:00pm (local time)
-const TOGETHER_START = new Date(2025, 10, 2, 20, 0, 0) // month 10 = November
+const TOGETHER_START = new Date(2025, 10, 2, 20, 0, 0)
 
 function updateTogetherTimer(){
   const el = byId("timerText")
-  if (!el) return
-
-  const now = new Date()
-  let diffMs = now - TOGETHER_START
-
-  if (diffMs < 0) {
-    el.textContent = "0 days 0 hours 0 minutes 0 seconds"
+  if (!el){
     return
   }
 
-  const totalSeconds = Math.floor(diffMs / 1000)
-  const seconds = totalSeconds % 60
-  const totalMinutes = Math.floor(totalSeconds / 60)
-  const minutes = totalMinutes % 60
-  const totalHours = Math.floor(totalMinutes / 60)
-  const hours = totalHours % 24
-  const days = Math.floor(totalHours / 24)
+  const now = new Date()
+  let diffMs = now.getTime() - TOGETHER_START.getTime()
 
-  el.textContent = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`
+  if (diffMs < 0){
+    diffMs = 0
+  }
+
+  const totalSeconds = Math.floor(diffMs / 1000)
+
+  const days = Math.floor(totalSeconds / (24 * 60 * 60))
+  const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60))
+  const minutes = Math.floor((totalSeconds % (60 * 60)) / 60)
+  const seconds = totalSeconds % 60
+
+  el.textContent = `${days} days ${pad2(hours)} hours ${pad2(minutes)} minutes ${pad2(seconds)} seconds`
 }
 
 function startTogetherTimer(){
   updateTogetherTimer()
   setInterval(updateTogetherTimer, 1000)
-}
-
-function initHome(){
-  startTogetherTimer()
-
-  const homePhoto = byId("homePhoto")
-  if (homePhoto){
-    homePhoto.style.backgroundImage = "url('images/photo1.jpg')"
-  }
-
-  const lines = [
-    "You’re loved. A lot.",
-    "I’m proud of you, always.",
-    "You’re my favourite person.",
-    "Even on bad days, I’m with you.",
-    "Soft reminder: you matter."
-  ]
-
-  const dailyLine = byId("dailyLine")
-  if (dailyLine){
-    const i = Math.floor(Math.random() * lines.length)
-    dailyLine.textContent = lines[i]
-  }
-
-  const sparkleBtn = byId("sparkleBtn")
-  if (sparkleBtn){
-    sparkleBtn.addEventListener("click", () => {
-      showToast("✨ hi pretty")
-      burstSparkles(14)
-    })
-  }
 }
 
 function burstSparkles(count){
@@ -141,6 +101,29 @@ function burstSparkles(count){
       s.remove()
     }, 900)
   }
+}
+
+function initHome(){
+  const homePhoto = byId("homePhoto")
+  if (homePhoto){
+    homePhoto.style.backgroundImage = "url('images/photo1.jpg')"
+  }
+
+  const dailyLine = byId("dailyLine")
+  if (dailyLine){
+    const lines = ["you’re loved.", "i’m proud of you.", "i miss you.", "you’re my favourite."]
+    dailyLine.textContent = lines[Math.floor(Math.random() * lines.length)]
+  }
+
+  const sparkleBtn = byId("sparkleBtn")
+  if (sparkleBtn){
+    sparkleBtn.addEventListener("click", () => {
+      showToast("💜")
+      burstSparkles(12)
+    })
+  }
+
+  startTogetherTimer()
 }
 
 document.addEventListener("DOMContentLoaded", () => {
