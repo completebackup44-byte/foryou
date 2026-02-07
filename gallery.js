@@ -3,7 +3,6 @@ const PHOTOS = []
 for (let i = 1; i <= 31; i++){
   PHOTOS.push({
     src: `images/image${i}.jpg`,
-    title: "us",
     caption: ""
   })
 }
