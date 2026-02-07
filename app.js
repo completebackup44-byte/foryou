@@ -49,7 +49,40 @@ function addTilt(){
   }
 }
 
+// "We've been us for" — count up from Nov 2, 2025 8:00pm (local time)
+const TOGETHER_START = new Date(2025, 10, 2, 20, 0, 0) // month 10 = November
+
+function updateTogetherTimer(){
+  const el = byId("timerText")
+  if (!el) return
+
+  const now = new Date()
+  let diffMs = now - TOGETHER_START
+
+  if (diffMs < 0) {
+    el.textContent = "0 days 0 hours 0 minutes 0 seconds"
+    return
+  }
+
+  const totalSeconds = Math.floor(diffMs / 1000)
+  const seconds = totalSeconds % 60
+  const totalMinutes = Math.floor(totalSeconds / 60)
+  const minutes = totalMinutes % 60
+  const totalHours = Math.floor(totalMinutes / 60)
+  const hours = totalHours % 24
+  const days = Math.floor(totalHours / 24)
+
+  el.textContent = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`
+}
+
+function startTogetherTimer(){
+  updateTogetherTimer()
+  setInterval(updateTogetherTimer, 1000)
+}
+
 function initHome(){
+  startTogetherTimer()
+
   const homePhoto = byId("homePhoto")
   if (homePhoto){
     homePhoto.style.backgroundImage = "url('images/photo1.jpg')"
