@@ -1,108 +1,8 @@
 const NOTE_DATA = [
-  {
-    id: "sad",
-    title: "I’m sad",
-    emoji: "🥺",
-    tags: ["comfort", "soft"],
-    notes: [
-      "PLACEHOLDER NOTE 1 — paste your message here.",
-      "PLACEHOLDER NOTE 2 — paste your message here.",
-      "PLACEHOLDER NOTE 3 — paste your message here.",
-      "PLACEHOLDER NOTE 4 — paste your message here.",
-      "PLACEHOLDER NOTE 5 — paste your message here."
-    ]
-  },
-  {
-    id: "happy",
-    title: "I’m happy",
-    emoji: "🌷",
-    tags: ["celebrate", "sweet"],
-    notes: [
-      "PLACEHOLDER NOTE 1",
-      "PLACEHOLDER NOTE 2",
-      "PLACEHOLDER NOTE 3",
-      "PLACEHOLDER NOTE 4",
-      "PLACEHOLDER NOTE 5"
-    ]
-  },
-  {
-    id: "lonely",
-    title: "I’m lonely",
-    emoji: "🫧",
-    tags: ["close", "warm"],
-    notes: [
-      "PLACEHOLDER NOTE 1",
-      "PLACEHOLDER NOTE 2",
-      "PLACEHOLDER NOTE 3",
-      "PLACEHOLDER NOTE 4",
-      "PLACEHOLDER NOTE 5"
-    ]
-  },
-  {
-    id: "miss",
-    title: "I miss you",
-    emoji: "🫶",
-    tags: ["us", "clingy"],
-    notes: [
-      "PLACEHOLDER NOTE 1",
-      "PLACEHOLDER NOTE 2",
-      "PLACEHOLDER NOTE 3",
-      "PLACEHOLDER NOTE 4",
-      "PLACEHOLDER NOTE 5"
-    ]
-  },
-  {
-    id: "anxious",
-    title: "I’m anxious",
-    emoji: "🌧️",
-    tags: ["breathe", "slow"],
-    notes: [
-      "PLACEHOLDER NOTE 1",
-      "PLACEHOLDER NOTE 2",
-      "PLACEHOLDER NOTE 3",
-      "PLACEHOLDER NOTE 4",
-      "PLACEHOLDER NOTE 5"
-    ]
-  },
-  {
-    id: "sleep",
-    title: "I can’t sleep",
-    emoji: "🌙",
-    tags: ["calm", "night"],
-    notes: [
-      "PLACEHOLDER NOTE 1",
-      "PLACEHOLDER NOTE 2",
-      "PLACEHOLDER NOTE 3",
-      "PLACEHOLDER NOTE 4",
-      "PLACEHOLDER NOTE 5"
-    ]
-  },
-  {
-    id: "overwhelmed",
-    title: "I’m overwhelmed",
-    emoji: "🌊",
-    tags: ["one step", "ground"],
-    notes: [
-      "PLACEHOLDER NOTE 1",
-      "PLACEHOLDER NOTE 2",
-      "PLACEHOLDER NOTE 3",
-      "PLACEHOLDER NOTE 4",
-      "PLACEHOLDER NOTE 5"
-    ]
-  },
-  {
-    id: "idk",
-    title: "I don’t know what I feel",
-    emoji: "🫠",
-    tags: ["gentle", "reset"],
-    notes: [
-      "PLACEHOLDER NOTE 1",
-      "PLACEHOLDER NOTE 2",
-      "PLACEHOLDER NOTE 3",
-      "PLACEHOLDER NOTE 4",
-      "PLACEHOLDER NOTE 5"
-    ]
-  }
+  { id: "sad", title: "sad", emoji: "🥺", tags: [], notes: ["PASTE HERE", "PASTE HERE", "PASTE HERE", "PASTE HERE", "PASTE HERE"] },
+  { id: "anxious", title: "anxious", emoji: "🌧️", tags: [], notes: ["PASTE HERE", "PASTE HERE", "PASTE HERE", "PASTE HERE", "PASTE HERE"] },
+  { id: "miss", title: "miss you", emoji: "🫶", tags: [], notes: ["PASTE HERE", "PASTE HERE", "PASTE HERE", "PASTE HERE", "PASTE HERE"] },
+  { id: "sleep", title: "can’t sleep", emoji: "🌙", tags: [], notes: ["PASTE HERE", "PASTE HERE", "PASTE HERE", "PASTE HERE", "PASTE HERE"] }
 ]
 
 function byId(id){
@@ -124,6 +24,22 @@ function showToast(text){
   }, 1400)
 }
 
+function clampIndex(i, len){
+  if (len <= 0){
+    return 0
+  }
+
+  while (i < 0){
+    i = i + len
+  }
+
+  while (i >= len){
+    i = i - len
+  }
+
+  return i
+}
+
 function createCard(item){
   const a = document.createElement("a")
   a.className = "tile"
@@ -138,13 +54,8 @@ function createCard(item){
   title.className = "tile-title"
   title.textContent = item.title
 
-  const sub = document.createElement("div")
-  sub.className = "tile-sub"
-  sub.textContent = item.tags.join(" • ")
-
   a.appendChild(emoji)
   a.appendChild(title)
-  a.appendChild(sub)
 
   a.addEventListener("click", (e) => {
     e.preventDefault()
@@ -168,38 +79,13 @@ function openModal(categoryId, noteIndex){
   currentIndex = clampIndex(noteIndex, cat.notes.length)
 
   const modal = byId("modal")
-  const title = byId("modalTitle")
-  const noteText = byId("noteText")
+  byId("modalTitle").textContent = `${cat.emoji} ${cat.title}`
+  byId("noteText").textContent = cat.notes[currentIndex]
+
   const pillRow = byId("pillRow")
-
-  title.textContent = `${cat.emoji} ${cat.title}`
-  noteText.textContent = cat.notes[currentIndex]
-
   pillRow.innerHTML = ""
-  for (const t of cat.tags){
-    const pill = document.createElement("div")
-    pill.className = "pill"
-    pill.textContent = t
-    pillRow.appendChild(pill)
-  }
 
   modal.classList.add("show")
-}
-
-function clampIndex(i, len){
-  if (len <= 0){
-    return 0
-  }
-
-  while (i < 0){
-    i = i + len
-  }
-
-  while (i >= len){
-    i = i - len
-  }
-
-  return i
 }
 
 function renderGrid(filterText){
@@ -209,8 +95,7 @@ function renderGrid(filterText){
   const q = (filterText || "").trim().toLowerCase()
 
   for (const item of NOTE_DATA){
-    const hay = `${item.title} ${item.tags.join(" ")} ${item.id}`.toLowerCase()
-
+    const hay = `${item.title} ${item.id}`.toLowerCase()
     if (q.length > 0 && !hay.includes(q)){
       continue
     }
@@ -228,20 +113,17 @@ function randomPick(){
 function init(){
   renderGrid("")
 
-  const search = byId("search")
-  search.addEventListener("input", () => {
-    renderGrid(search.value)
+  byId("search").addEventListener("input", (e) => {
+    renderGrid(e.target.value)
   })
 
-  const randomBtn = byId("randomBtn")
-  randomBtn.addEventListener("click", () => {
+  byId("randomBtn").addEventListener("click", () => {
     randomPick()
   })
 
   const modal = byId("modal")
-  const closeModal = byId("closeModal")
 
-  closeModal.addEventListener("click", () => {
+  byId("closeModal").addEventListener("click", () => {
     modal.classList.remove("show")
   })
 
@@ -251,50 +133,33 @@ function init(){
     }
   })
 
-  const prev = byId("prevNote")
-  const next = byId("nextNote")
-  const copy = byId("copyNote")
-
-  prev.addEventListener("click", () => {
+  byId("prevNote").addEventListener("click", () => {
     currentIndex = clampIndex(currentIndex - 1, currentCategory.notes.length)
     byId("noteText").textContent = currentCategory.notes[currentIndex]
   })
 
-  next.addEventListener("click", () => {
+  byId("nextNote").addEventListener("click", () => {
     currentIndex = clampIndex(currentIndex + 1, currentCategory.notes.length)
     byId("noteText").textContent = currentCategory.notes[currentIndex]
   })
 
-  copy.addEventListener("click", async () => {
+  byId("copyNote").addEventListener("click", async () => {
     const text = byId("noteText").textContent
 
     try{
       await navigator.clipboard.writeText(text)
-      showToast("Copied 💜")
+      showToast("copied 💜")
     }catch{
-      showToast("Couldn’t copy (browser blocked)")
+      showToast("can’t copy")
     }
   })
 
   if (location.hash){
     const id = location.hash.replace("#", "")
-    const exists = NOTE_DATA.some(x => x.id === id)
-    if (exists){
+    if (NOTE_DATA.some(x => x.id === id)){
       openModal(id, 0)
     }
   }
-}
-
-function clamp(v, a, b){
-  if (v < a){
-    return a
-  }
-
-  if (v > b){
-    return b
-  }
-
-  return v
 }
 
 document.addEventListener("DOMContentLoaded", init)
