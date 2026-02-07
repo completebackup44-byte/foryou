@@ -35,4 +35,41 @@ function renderGallery(){
     card.appendChild(img)
     card.appendChild(cap)
 
-    card.add
+    card.addEventListener("click", () => {
+      openImg(p)
+    })
+
+    grid.appendChild(card)
+  }
+}
+
+function openImg(p){
+  const modal = byId("imgModal")
+  const zoomed = byId("zoomedImg")
+
+  zoomed.src = p.src
+  zoomed.alt = p.title
+
+  byId("imgTitle").textContent = p.title
+  byId("imgCaption").textContent = p.caption || ""
+
+  modal.classList.add("show")
+}
+
+function init(){
+  renderGallery()
+
+  const modal = byId("imgModal")
+
+  byId("closeImg").addEventListener("click", () => {
+    modal.classList.remove("show")
+  })
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal){
+      modal.classList.remove("show")
+    }
+  })
+}
+
+document.addEventListener("DOMContentLoaded", init)
