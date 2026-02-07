@@ -1,92 +1,300 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Open when… 💜</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
+const NOTE_DATA = [
+  {
+    id: "sad",
+    title: "I’m sad",
+    emoji: "🥺",
+    tags: ["comfort", "soft"],
+    notes: [
+      "PLACEHOLDER NOTE 1 — paste your message here.",
+      "PLACEHOLDER NOTE 2 — paste your message here.",
+      "PLACEHOLDER NOTE 3 — paste your message here.",
+      "PLACEHOLDER NOTE 4 — paste your message here.",
+      "PLACEHOLDER NOTE 5 — paste your message here."
+    ]
+  },
+  {
+    id: "happy",
+    title: "I’m happy",
+    emoji: "🌷",
+    tags: ["celebrate", "sweet"],
+    notes: [
+      "PLACEHOLDER NOTE 1",
+      "PLACEHOLDER NOTE 2",
+      "PLACEHOLDER NOTE 3",
+      "PLACEHOLDER NOTE 4",
+      "PLACEHOLDER NOTE 5"
+    ]
+  },
+  {
+    id: "lonely",
+    title: "I’m lonely",
+    emoji: "🫧",
+    tags: ["close", "warm"],
+    notes: [
+      "PLACEHOLDER NOTE 1",
+      "PLACEHOLDER NOTE 2",
+      "PLACEHOLDER NOTE 3",
+      "PLACEHOLDER NOTE 4",
+      "PLACEHOLDER NOTE 5"
+    ]
+  },
+  {
+    id: "miss",
+    title: "I miss you",
+    emoji: "🫶",
+    tags: ["us", "clingy"],
+    notes: [
+      "PLACEHOLDER NOTE 1",
+      "PLACEHOLDER NOTE 2",
+      "PLACEHOLDER NOTE 3",
+      "PLACEHOLDER NOTE 4",
+      "PLACEHOLDER NOTE 5"
+    ]
+  },
+  {
+    id: "anxious",
+    title: "I’m anxious",
+    emoji: "🌧️",
+    tags: ["breathe", "slow"],
+    notes: [
+      "PLACEHOLDER NOTE 1",
+      "PLACEHOLDER NOTE 2",
+      "PLACEHOLDER NOTE 3",
+      "PLACEHOLDER NOTE 4",
+      "PLACEHOLDER NOTE 5"
+    ]
+  },
+  {
+    id: "sleep",
+    title: "I can’t sleep",
+    emoji: "🌙",
+    tags: ["calm", "night"],
+    notes: [
+      "PLACEHOLDER NOTE 1",
+      "PLACEHOLDER NOTE 2",
+      "PLACEHOLDER NOTE 3",
+      "PLACEHOLDER NOTE 4",
+      "PLACEHOLDER NOTE 5"
+    ]
+  },
+  {
+    id: "overwhelmed",
+    title: "I’m overwhelmed",
+    emoji: "🌊",
+    tags: ["one step", "ground"],
+    notes: [
+      "PLACEHOLDER NOTE 1",
+      "PLACEHOLDER NOTE 2",
+      "PLACEHOLDER NOTE 3",
+      "PLACEHOLDER NOTE 4",
+      "PLACEHOLDER NOTE 5"
+    ]
+  },
+  {
+    id: "idk",
+    title: "I don’t know what I feel",
+    emoji: "🫠",
+    tags: ["gentle", "reset"],
+    notes: [
+      "PLACEHOLDER NOTE 1",
+      "PLACEHOLDER NOTE 2",
+      "PLACEHOLDER NOTE 3",
+      "PLACEHOLDER NOTE 4",
+      "PLACEHOLDER NOTE 5"
+    ]
+  }
+]
 
-  <body>
-    <div class="bg">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="grain"></div>
-    </div>
+function byId(id){
+  return document.getElementById(id)
+}
 
-    <header class="topbar">
-      <div class="brand">
-        <div class="dot"></div>
-        <span>For You</span>
-      </div>
+function showToast(text){
+  const toast = byId("toast")
+  if (!toast){
+    return
+  }
 
-      <nav class="nav">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link active" href="notes.html">Open when…</a>
-        <a class="nav-link" href="gallery.html">Photos</a>
-      </nav>
-    </header>
+  toast.textContent = text
+  toast.classList.add("show")
 
-    <main class="wrap">
-      <section class="card section">
-        <div class="section-head">
-          <h1 class="section-title big">Open when…</h1>
-          <p class="section-subtitle">
-            Pick whatever fits. If nothing fits, pick “I don’t know.”
-          </p>
-        </div>
+  clearTimeout(window.__toastTimer)
+  window.__toastTimer = setTimeout(() => {
+    toast.classList.remove("show")
+  }, 1400)
+}
 
-        <div class="tools">
-          <input class="search" id="search" placeholder="Search (sad, lonely, sleep...)">
-          <button class="btn btn-primary" id="randomBtn">
-            Random note
-            <span class="btn-glow"></span>
-          </button>
-        </div>
+function createCard(item){
+  const a = document.createElement("a")
+  a.className = "tile"
+  a.href = `#${item.id}`
+  a.setAttribute("data-tilt", "")
 
-        <div class="grid" id="notesGrid"></div>
-      </section>
+  const emoji = document.createElement("div")
+  emoji.className = "tile-emoji"
+  emoji.textContent = item.emoji
 
-      <footer class="footer">
-        <div class="footer-inner">
-          <span>💜</span>
-          <span class="footer-dot">•</span>
-          <span class="muted">Tap a card to open a note</span>
-        </div>
-      </footer>
-    </main>
+  const title = document.createElement("div")
+  title.className = "tile-title"
+  title.textContent = item.title
 
-    <div class="modal" id="modal">
-      <div class="modal-card">
-        <div class="modal-top">
-          <div class="modal-title" id="modalTitle">Title</div>
-          <button class="icon-btn" id="closeModal" aria-label="Close">
-            ✕
-          </button>
-        </div>
+  const sub = document.createElement("div")
+  sub.className = "tile-sub"
+  sub.textContent = item.tags.join(" • ")
 
-        <div class="modal-body">
-          <div class="pill-row" id="pillRow"></div>
+  a.appendChild(emoji)
+  a.appendChild(title)
+  a.appendChild(sub)
 
-          <article class="note" id="noteText">
-            Placeholder text…
-          </article>
-        </div>
+  a.addEventListener("click", (e) => {
+    e.preventDefault()
+    openModal(item.id, 0)
+    history.replaceState(null, "", `#${item.id}`)
+  })
 
-        <div class="modal-bottom">
-          <button class="btn btn-ghost" id="prevNote">Prev</button>
-          <button class="btn btn-ghost" id="nextNote">Next</button>
-          <button class="btn btn-primary" id="copyNote">
-            Copy
-            <span class="btn-glow"></span>
-          </button>
-        </div>
-      </div>
-    </div>
+  return a
+}
 
-    <div class="toast" id="toast"></div>
+let currentCategory = null
+let currentIndex = 0
 
-    <script src="notes.js"></script>
-    <script src="app.js"></script>
-  </body>
-</html>
+function openModal(categoryId, noteIndex){
+  const cat = NOTE_DATA.find(x => x.id === categoryId)
+  if (!cat){
+    return
+  }
+
+  currentCategory = cat
+  currentIndex = clampIndex(noteIndex, cat.notes.length)
+
+  const modal = byId("modal")
+  const title = byId("modalTitle")
+  const noteText = byId("noteText")
+  const pillRow = byId("pillRow")
+
+  title.textContent = `${cat.emoji} ${cat.title}`
+  noteText.textContent = cat.notes[currentIndex]
+
+  pillRow.innerHTML = ""
+  for (const t of cat.tags){
+    const pill = document.createElement("div")
+    pill.className = "pill"
+    pill.textContent = t
+    pillRow.appendChild(pill)
+  }
+
+  modal.classList.add("show")
+}
+
+function clampIndex(i, len){
+  if (len <= 0){
+    return 0
+  }
+
+  while (i < 0){
+    i = i + len
+  }
+
+  while (i >= len){
+    i = i - len
+  }
+
+  return i
+}
+
+function renderGrid(filterText){
+  const grid = byId("notesGrid")
+  grid.innerHTML = ""
+
+  const q = (filterText || "").trim().toLowerCase()
+
+  for (const item of NOTE_DATA){
+    const hay = `${item.title} ${item.tags.join(" ")} ${item.id}`.toLowerCase()
+
+    if (q.length > 0 && !hay.includes(q)){
+      continue
+    }
+
+    grid.appendChild(createCard(item))
+  }
+}
+
+function randomPick(){
+  const cat = NOTE_DATA[Math.floor(Math.random() * NOTE_DATA.length)]
+  const idx = Math.floor(Math.random() * cat.notes.length)
+  openModal(cat.id, idx)
+}
+
+function init(){
+  renderGrid("")
+
+  const search = byId("search")
+  search.addEventListener("input", () => {
+    renderGrid(search.value)
+  })
+
+  const randomBtn = byId("randomBtn")
+  randomBtn.addEventListener("click", () => {
+    randomPick()
+  })
+
+  const modal = byId("modal")
+  const closeModal = byId("closeModal")
+
+  closeModal.addEventListener("click", () => {
+    modal.classList.remove("show")
+  })
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal){
+      modal.classList.remove("show")
+    }
+  })
+
+  const prev = byId("prevNote")
+  const next = byId("nextNote")
+  const copy = byId("copyNote")
+
+  prev.addEventListener("click", () => {
+    currentIndex = clampIndex(currentIndex - 1, currentCategory.notes.length)
+    byId("noteText").textContent = currentCategory.notes[currentIndex]
+  })
+
+  next.addEventListener("click", () => {
+    currentIndex = clampIndex(currentIndex + 1, currentCategory.notes.length)
+    byId("noteText").textContent = currentCategory.notes[currentIndex]
+  })
+
+  copy.addEventListener("click", async () => {
+    const text = byId("noteText").textContent
+
+    try{
+      await navigator.clipboard.writeText(text)
+      showToast("Copied 💜")
+    }catch{
+      showToast("Couldn’t copy (browser blocked)")
+    }
+  })
+
+  if (location.hash){
+    const id = location.hash.replace("#", "")
+    const exists = NOTE_DATA.some(x => x.id === id)
+    if (exists){
+      openModal(id, 0)
+    }
+  }
+}
+
+function clamp(v, a, b){
+  if (v < a){
+    return a
+  }
+
+  if (v > b){
+    return b
+  }
+
+  return v
+}
+
+document.addEventListener("DOMContentLoaded", init)
