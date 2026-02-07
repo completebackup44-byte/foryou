@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>.. / .-.. --- ...- . / -.-- ---</title>
+    <title>photos 💜</title>
     <link rel="stylesheet" href="styles.css">
   </head>
 
@@ -14,17 +14,34 @@
       <div class="grain"></div>
     </div>
 
+    <header class="topbar">
+      <div class="brand">
+        <div class="dot"></div>
+        <span>for you</span>
+      </div>
+
       <nav class="nav">
         <a class="nav-link" href="index.html">home</a>
         <a class="nav-link" href="notes.html">click me</a>
-        <a class="nav-link active" href="gallery.html">photos i havent sent (ill update this as time goes on)</a>
+        <a class="nav-link active" href="gallery.html">photos</a>
       </nav>
     </header>
 
+    <main class="wrap">
+      <section class="card section">
+        <div class="section-head">
+          <h1 class="section-title big">photos</h1>
+          <p class="section-subtitle">add pics to <span class="mono">/images</span> then list them in <span class="mono">gallery.js</span></p>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </section>
+
       <footer class="footer">
         <div class="footer-inner">
+          <span>💜</span>
           <span class="footer-dot">•</span>
-          <span class="muted">Click an image to zoom</span>
+          <span class="muted">click to zoom</span>
         </div>
       </footer>
     </main>
@@ -32,7 +49,7 @@
     <div class="modal" id="imgModal">
       <div class="modal-card modal-img">
         <div class="modal-top">
-          <div class="modal-title" id="imgTitle">Photo</div>
+          <div class="modal-title" id="imgTitle">photo</div>
           <button class="icon-btn" id="closeImg" aria-label="Close">✕</button>
         </div>
 
