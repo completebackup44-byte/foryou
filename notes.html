@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Open when… 💜</title>
+    <title>click me 💜</title>
     <link rel="stylesheet" href="styles.css">
   </head>
 
@@ -17,29 +17,26 @@
     <header class="topbar">
       <div class="brand">
         <div class="dot"></div>
-        <span>For You</span>
+        <span>for you</span>
       </div>
 
       <nav class="nav">
-        <a class="nav-link" href="index.html">Home</a>
-        <a class="nav-link active" href="notes.html">Open when…</a>
-        <a class="nav-link" href="gallery.html">Photos</a>
+        <a class="nav-link" href="index.html">home</a>
+        <a class="nav-link active" href="notes.html">click me</a>
+        <a class="nav-link" href="gallery.html">photos</a>
       </nav>
     </header>
 
     <main class="wrap">
       <section class="card section">
         <div class="section-head">
-          <h1 class="section-title big">Open when…</h1>
-          <p class="section-subtitle">
-            Pick whatever fits. If nothing fits, pick “I don’t know.”
-          </p>
+          <h1 class="section-title big">open when…</h1>
         </div>
 
         <div class="tools">
-          <input class="search" id="search" placeholder="Search (sad, lonely, sleep...)">
+          <input class="search" id="search" placeholder="search (sad, miss, sleep...)">
           <button class="btn btn-primary" id="randomBtn">
-            Random note
+            random
             <span class="btn-glow"></span>
           </button>
         </div>
@@ -51,7 +48,7 @@
         <div class="footer-inner">
           <span>💜</span>
           <span class="footer-dot">•</span>
-          <span class="muted">Tap a card to open a note</span>
+          <span class="muted">tap one</span>
         </div>
       </footer>
     </main>
@@ -59,25 +56,20 @@
     <div class="modal" id="modal">
       <div class="modal-card">
         <div class="modal-top">
-          <div class="modal-title" id="modalTitle">Title</div>
-          <button class="icon-btn" id="closeModal" aria-label="Close">
-            ✕
-          </button>
+          <div class="modal-title" id="modalTitle">title</div>
+          <button class="icon-btn" id="closeModal" aria-label="Close">✕</button>
         </div>
 
         <div class="modal-body">
           <div class="pill-row" id="pillRow"></div>
-
-          <article class="note" id="noteText">
-            Placeholder text…
-          </article>
+          <article class="note" id="noteText">…</article>
         </div>
 
         <div class="modal-bottom">
-          <button class="btn btn-ghost" id="prevNote">Prev</button>
-          <button class="btn btn-ghost" id="nextNote">Next</button>
+          <button class="btn btn-ghost" id="prevNote">prev</button>
+          <button class="btn btn-ghost" id="nextNote">next</button>
           <button class="btn btn-primary" id="copyNote">
-            Copy
+            copy
             <span class="btn-glow"></span>
           </button>
         </div>
