@@ -106,7 +106,7 @@ function burstSparkles(count){
 function initHome(){
   const homePhoto = byId("homePhoto")
   if (homePhoto){
-    homePhoto.style.backgroundImage = "url('images/photo1.jpg')"
+    homePhoto.style.backgroundImage = "url('images/image1.jpg')"
   }
 
   const dailyLine = byId("dailyLine")
