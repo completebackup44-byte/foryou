@@ -1,6 +1,12 @@
-const PHOTOS = [
-  { src: "images/photo1.jpg", title: "us", caption: "" }
-]
+const PHOTOS = []
+
+for (let i = 1; i <= 31; i++){
+  PHOTOS.push({
+    src: `images/image${i}.jpg`,
+    title: "us",
+    caption: ""
+  })
+}
 
 function byId(id){
   return document.getElementById(id)
@@ -11,6 +17,8 @@ function renderGallery(){
   if (!grid){
     return
   }
+
+  grid.innerHTML = ""
 
   for (const p of PHOTOS){
     const card = document.createElement("div")
@@ -27,37 +35,4 @@ function renderGallery(){
     card.appendChild(img)
     card.appendChild(cap)
 
-    card.addEventListener("click", () => {
-      openImg(p)
-    })
-
-    grid.appendChild(card)
-  }
-}
-
-function openImg(p){
-  const modal = byId("imgModal")
-  byId("zoomedImg").src = p.src
-  byId("zoomedImg").alt = p.title
-  byId("imgTitle").textContent = p.title
-  byId("imgCaption").textContent = p.caption || ""
-  modal.classList.add("show")
-}
-
-function init(){
-  renderGallery()
-
-  const modal = byId("imgModal")
-
-  byId("closeImg").addEventListener("click", () => {
-    modal.classList.remove("show")
-  })
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal){
-      modal.classList.remove("show")
-    }
-  })
-}
-
-document.addEventListener("DOMContentLoaded", init)
+    card.add
