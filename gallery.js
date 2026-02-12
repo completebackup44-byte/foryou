@@ -1,6 +1,6 @@
 const PHOTOS = []
 
-for (let i = 1; i <= 31; i++){
+for (let i = 1; i <= 100; i++){
   PHOTOS.push({
     src: `images/image${i}.jpg`,
     caption: ""
