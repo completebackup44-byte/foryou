@@ -76,26 +76,103 @@ const NOTE_DATA = [
     emoji: "🌧️",
     tags: [],
     notes: [
-      `take a slow breath with me.
-in through your nose.
-out through your mouth.
-nothing bad is happening right now.`,
+      `
+        i know your chest feels tight right now and your mind is trying to run ahead of you
+        
+        so let me pull you back for a second
+        
+        nothing has to be solved in this exact moment
+        you don’t need the perfect words
+        you don’t need to be strong for me
+        you can just be anxious and still be loved
+        
+        i know life gets messy and scary and sometimes it feels like everything is moving at once
+        but even then, despite everything, we still have each other
+        we still have us
+        and that matters more than your thoughts are letting you feel right now
+        
+        i’m not going anywhere
+        i’m on your side
+        i’m with you even if i’m not right next to you
+        
+        take one slow breath
+        read this again if you need to
+        you’re safe with me
+        we’ll get through this the same way we always do
+        together
+        `,
 
-      `this feeling is uncomfortable, but it is not dangerous.
-it will pass.
-i promise.`,
+      `
+      hey
+      
+      i know you’re spiralling a little
+      so i’m borrowing your brain for a second
+      
+      despite everything, we still have each other
+      we still have us
+      
+      you don’t have to fix anything right now
+      just breathe and let me be your calm
+      
+      i’m here
+      i love you
+      `,
 
-      `look around and name five things you can see.
-you are here.
-you are safe.
-im right here with you.`,
+      `
+      hey darling
+      
+      if you’re anxious right now, i want you to stop trying to wrestle your thoughts into place
+      you don’t have to win a fight in your head to deserve peace
+      
+      i know it feels like something bad is about to happen, like you have to stay alert
+      but you’re allowed to rest
+      you’re allowed to let go for a minute
+      i’ve got you
+      
+      even if everything outside feels uncertain, one thing isn’t
+      me and you
+      we still have each other
+      we still have a home in each other, even when the world feels loud
+      
+      so do this with me
+      put your phone down for a second
+      loosen your shoulders
+      unclench your jaw
+      take a slow breath and let it out longer than you took it in
+      
+      i love you more than your anxiety
+      and i’m not leaving
+      i’m right here and i love you
+      `,
 
-      `you do not need to solve anything right now.
-just breathe.
-i believe in you so much.`,
-
-      `even when your thoughts are loud,
-my love for you is louder.`
+      `
+      Moon, a hole of light
+      Through the big top tent up high
+      Here before and after me
+      Shinin' down on me
+      Moon, tell me if I could
+      Send up my heart to you?
+      So when I die, which I must do
+      Could it shine down here with you?
+      'Cause my love is mine, all mine
+      My love mine, mine, mine
+      Nothing in the world belongs to me
+      But my love, mine, all mine, all mine
+      My baby here on Earth
+      Showed me what my heart was worth
+      So when it comes to be my turn
+      Could you shine it down here for her?
+      'Cause my love is mine, all mine
+      My love mine, mine, mine
+      Nothing in the world belongs to me
+      But my love, mine, all mine
+      Nothing in the world is mine for free
+      But my love, mine, all mine, all mine
+      `,
+      `
+        just to take your mind off things, try to count how many
+        "i love you"s you can find on this website lol
+      `
     ]
   },
 
