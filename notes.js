@@ -266,9 +266,16 @@ function clampIndex(i, len){
   return i
 }
 
+const TILE_COLORS = {
+  sad: "tile-sad",
+  anxious: "tile-anxious",
+  miss: "tile-miss",
+  sleep: "tile-sleep",
+}
+
 function createCard(item){
   const a = document.createElement("a")
-  a.className = "tile"
+  a.className = `tile ${TILE_COLORS[item.id] || ""}`
   a.href = `#${item.id}`
   a.setAttribute("data-tilt", "")
 
