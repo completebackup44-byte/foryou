@@ -231,25 +231,6 @@ even when youre asleep.`
   }
 ]
 
-function byId(id){
-  return document.getElementById(id)
-}
-
-function showToast(text){
-  const toast = byId("toast")
-  if (!toast){
-    return
-  }
-
-  toast.textContent = text
-  toast.classList.add("show")
-
-  clearTimeout(window.__toastTimer)
-  window.__toastTimer = setTimeout(() => {
-    toast.classList.remove("show")
-  }, 1400)
-}
-
 function clampIndex(i, len){
   if (len <= 0){
     return 0

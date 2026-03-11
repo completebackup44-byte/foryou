@@ -74,7 +74,7 @@ function startTogetherTimer(){
 function burstSparkles(count){
   for (let i = 0; i < count; i++){
     const s = document.createElement("div")
-    s.textContent = ["✨","💜","✦","⋆"][Math.floor(Math.random() * 4)]
+    s.textContent = ["♥","💜","♡","✦","♥","⋆"][Math.floor(Math.random() * 6)]
     s.style.position = "fixed"
     s.style.left = `${Math.random() * 100}%`
     s.style.top = `${Math.random() * 100}%`
