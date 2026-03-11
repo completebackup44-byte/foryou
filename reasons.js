@@ -192,11 +192,21 @@ let maxVisible = 0
 const list = document.getElementById("reasonsList")
 const loader = document.getElementById("reasonsLoader")
 const counterEl = document.getElementById("counterNum")
+let counterBumpTimeout = null
 
 function updateCounter(n) {
   if (n > maxVisible) {
     maxVisible = n
     counterEl.textContent = maxVisible
+
+    counterEl.classList.remove("bump")
+    if (counterBumpTimeout !== null) {
+      clearTimeout(counterBumpTimeout)
+    }
+    // allow reflow so the animation retriggers
+    counterBumpTimeout = setTimeout(() => {
+      counterEl.classList.add("bump")
+    }, 0)
   }
 }
 
@@ -229,16 +239,15 @@ function appendBatch() {
   }
 }
 
-const sentinel = document.createElement("div")
-sentinel.className = "reasons-sentinel"
-loader.before(sentinel)
-
 const sentinelObserver = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting) {
-    appendBatch()
+  for (const entry of entries) {
+    if (entry.isIntersecting) {
+      appendBatch()
+      break
+    }
   }
-}, { rootMargin: "200px" })
+}, { rootMargin: "200px 0px 400px 0px" })
 
-sentinelObserver.observe(sentinel)
+sentinelObserver.observe(loader)
 
 appendBatch()
