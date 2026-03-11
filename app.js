@@ -18,7 +18,7 @@ function showToast(text){
   clearTimeout(window.__toastTimer)
   window.__toastTimer = setTimeout(() => {
     toast.classList.remove("show")
-  }, 1400)
+  }, 1600)
 }
 
 function addTilt(){

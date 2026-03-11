@@ -32,6 +32,7 @@
         <div class="section-head">
           <h1 class="section-title big">photos</h1>
           <p class="section-subtitle">heres a bunch of pics of me since you like them so much (idk why) some you may have some you may not have and ill add some more as time goes on.. maybe</p>
+          <p class="muted small" id="photoCount"></p>
         </div>
 
         <div class="gallery-grid" id="galleryGrid"></div>
@@ -53,9 +54,10 @@
           <button class="icon-btn" id="closeImg" aria-label="Close">✕</button>
         </div>
 
-        <div class="modal-body">
+        <div class="modal-body modal-img-body">
+          <button class="img-nav img-nav-prev" id="imgPrev" aria-label="Previous">‹</button>
           <img id="zoomedImg" class="zoomed" alt="">
-          <div class="muted small" id="imgCaption"></div>
+          <button class="img-nav img-nav-next" id="imgNext" aria-label="Next">›</button>
         </div>
       </div>
     </div>
