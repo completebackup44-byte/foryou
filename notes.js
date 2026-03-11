@@ -373,35 +373,18 @@ function init(){
     })
   }
 
-  const prev = byId("prevNote")
-  if (prev){
-    prev.addEventListener("click", () => {
-      if (!currentCategory){
-        return
-      }
-
-      currentIndex = clampIndex(currentIndex - 1, currentCategory.notes.length)
-      const noteText = byId("noteText")
-      if (noteText){
-        noteText.textContent = currentCategory.notes[currentIndex]
-      }
-    })
+  function stepNote(offset){
+    if (!currentCategory) return
+    currentIndex = clampIndex(currentIndex + offset, currentCategory.notes.length)
+    const noteText = byId("noteText")
+    if (noteText) noteText.textContent = currentCategory.notes[currentIndex]
   }
+
+  const prev = byId("prevNote")
+  if (prev) prev.addEventListener("click", () => stepNote(-1))
 
   const next = byId("nextNote")
-  if (next){
-    next.addEventListener("click", () => {
-      if (!currentCategory){
-        return
-      }
-
-      currentIndex = clampIndex(currentIndex + 1, currentCategory.notes.length)
-      const noteText = byId("noteText")
-      if (noteText){
-        noteText.textContent = currentCategory.notes[currentIndex]
-      }
-    })
-  }
+  if (next) next.addEventListener("click", () => stepNote(1))
 
   const copy = byId("copyNote")
   if (copy){

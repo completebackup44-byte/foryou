@@ -1,9 +1,5 @@
 const PHOTOS = Array.from({ length: 36 }, (_, i) => `images/image${i + 1}.jpg`)
 
-function byId(id){
-  return document.getElementById(id)
-}
-
 let currentIdx = 0
 
 function renderGallery(){
