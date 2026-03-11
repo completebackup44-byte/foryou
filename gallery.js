@@ -15,6 +15,8 @@ function renderGallery(){
 
   grid.innerHTML = ""
 
+  const frag = document.createDocumentFragment()
+
   PHOTOS.forEach((src, i) => {
     const card = document.createElement("div")
     card.className = "photo"
@@ -33,8 +35,10 @@ function renderGallery(){
     card.appendChild(overlay)
     card.addEventListener("click", () => openImg(i))
 
-    grid.appendChild(card)
+    frag.appendChild(card)
   })
+
+  grid.appendChild(frag)
 }
 
 function openImg(idx){

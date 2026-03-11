@@ -24,18 +24,23 @@ function showToast(text){
 function addTilt(){
   const tiles = document.querySelectorAll("[data-tilt]")
   for (const tile of tiles){
+    let rect = null
+
+    tile.addEventListener("mouseenter", () => {
+      rect = tile.getBoundingClientRect()
+    })
+
     tile.addEventListener("mousemove", (e) => {
-      const rect = tile.getBoundingClientRect()
+      if (!rect) return
       const x = (e.clientX - rect.left) / rect.width
       const y = (e.clientY - rect.top) / rect.height
-
       const rx = (0.5 - y) * 6
       const ry = (x - 0.5) * 8
-
       tile.style.transform = `translateY(-2px) rotateX(${rx}deg) rotateY(${ry}deg)`
     })
 
     tile.addEventListener("mouseleave", () => {
+      rect = null
       tile.style.transform = ""
     })
   }
@@ -75,31 +80,19 @@ function burstSparkles(count){
   for (let i = 0; i < count; i++){
     const s = document.createElement("div")
     s.textContent = ["♥","💜","♡","✦","♥","⋆"][Math.floor(Math.random() * 6)]
-    s.style.position = "fixed"
-    s.style.left = `${Math.random() * 100}%`
-    s.style.top = `${Math.random() * 100}%`
-    s.style.fontSize = `${12 + Math.random() * 16}px`
-    s.style.opacity = "0"
-    s.style.transform = "translateY(6px) scale(0.9)"
-    s.style.transition = "opacity 220ms ease, transform 520ms ease"
-    s.style.pointerEvents = "none"
-    s.style.zIndex = "70"
-
+    s.style.cssText = `position:fixed;left:${Math.random()*100}%;top:${Math.random()*100}%;font-size:${12+Math.random()*16}px;opacity:0;transform:translateY(6px) scale(0.9);transition:opacity 220ms ease,transform 520ms ease;pointer-events:none;z-index:70`
     document.body.appendChild(s)
 
     requestAnimationFrame(() => {
       s.style.opacity = "1"
-      s.style.transform = `translateY(-10px) scale(1)`
+      s.style.transform = "translateY(-10px) scale(1)"
     })
 
     setTimeout(() => {
       s.style.opacity = "0"
-      s.style.transform = `translateY(-24px) scale(0.9)`
+      s.style.transform = "translateY(-24px) scale(0.9)"
+      setTimeout(() => s.remove(), 500)
     }, 400)
-
-    setTimeout(() => {
-      s.remove()
-    }, 900)
   }
 }
 

@@ -342,8 +342,10 @@ function init(){
 
   const search = byId("search")
   if (search){
+    let debounce = null
     search.addEventListener("input", (e) => {
-      renderGrid(e.target.value)
+      clearTimeout(debounce)
+      debounce = setTimeout(() => renderGrid(e.target.value), 120)
     })
   }
 
