@@ -1,8 +1,4 @@
-const PHOTOS = Array.from({ length: 36 }, (_, i) => {
-  const n = i + 1
-  const ext = n === 28 ? "webp" : "jpg"
-  return `images/image${n}.${ext}`
-})
+const PHOTOS = Array.from({ length: 36 }, (_, i) => `images/image${i + 1}.jpg`)
 
 function byId(id){
   return document.getElementById(id)
