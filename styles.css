@@ -52,46 +52,46 @@ body {
 .blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(65px);
-  opacity: 0.26;
+  filter: blur(40px);
+  opacity: 0.24;
   animation: floaty 13s ease-in-out infinite;
+  will-change: transform;
 }
 
 .blob-1 {
-  width: 720px;
-  height: 720px;
-  left: -220px;
-  top: -200px;
-  background: radial-gradient(circle at 40% 40%, rgba(244,114,182,0.9), transparent 60%);
+  width: 500px;
+  height: 500px;
+  left: -160px;
+  top: -160px;
+  background: radial-gradient(circle at 40% 40%, rgba(244,114,182,0.85), transparent 60%);
   animation-duration: 15s;
 }
 
 .blob-2 {
-  width: 620px;
-  height: 620px;
-  right: -200px;
-  bottom: -200px;
-  background: radial-gradient(circle at 40% 40%, rgba(168,85,247,0.9), transparent 60%);
+  width: 440px;
+  height: 440px;
+  right: -160px;
+  bottom: -160px;
+  background: radial-gradient(circle at 40% 40%, rgba(168,85,247,0.85), transparent 60%);
   animation-delay: 3s;
   animation-duration: 11s;
 }
 
 .blob-3 {
-  width: 440px;
-  height: 440px;
+  width: 320px;
+  height: 320px;
   left: 50%;
   top: 35%;
-  background: radial-gradient(circle at 40% 40%, rgba(251,113,133,0.7), transparent 60%);
+  background: radial-gradient(circle at 40% 40%, rgba(251,113,133,0.65), transparent 60%);
   animation-delay: 6s;
   animation-duration: 17s;
-  opacity: 0.16;
+  opacity: 0.14;
 }
 
 @keyframes floaty {
-  0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(22px, -28px) scale(1.04); }
-  66%  { transform: translate(-16px, 16px) scale(0.97); }
-  100% { transform: translate(0, 0) scale(1); }
+  0%   { transform: translate3d(0, 0, 0); }
+  50%  { transform: translate3d(20px, -22px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
 .grain {

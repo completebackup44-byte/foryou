@@ -27,6 +27,7 @@ function renderGallery(){
     img.src = src
     img.alt = ""
     img.loading = "lazy"
+    img.decoding = "async"
 
     const overlay = document.createElement("div")
     overlay.className = "photo-overlay"
